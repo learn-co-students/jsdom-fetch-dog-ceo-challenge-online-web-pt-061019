@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const breedDropdown = document.getElementById('breed-dropdown')
 
   // listen for click on the li
-  dogBreedUI.addEventListener('click', function(event){
+  dogBreedUl.addEventListener('click', function(event){
     // event.target will be node that was clicked
     event.target.style.color = 'green'
   })
 
-  dogBreedUl.addEventListener('change', function(event) {
+  breedDropdown.addEventListener('change', /*function*/(event) => {
     const letter = event.target.value // 'a','b','c','d'
     // filter out the dogs whose name don't match the selected letter
     const filteredBreeds = allBreeds.filter((breed) => breed.startWith(letter))
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
- fetch(bredUrl, {method: 'GET'})
+ fetch(breedUrl, {method: 'GET'})
     .then((resp) => resp.json())
     // the return value is our parsed json - the breedData object
     .then((breedData) => { //breedData is an object whose keys are breed names
@@ -58,15 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
       allBreeds = Object.keys(breedData.message)
       console.log(allBreeds)  //allBreeds is an array of dog breeds
       //use helper function to get dog breeds on the page as list item
-      dogBreedUI.innerHTML = createDogList(allBreeds)
+      dogBreedUl.innerHTML = createDogList(allBreeds)
     }) 
  })
 
  function createDogList(dogBreedArray) {
   const dogListStringArray = dogBreedArray.map(function(breed){
     // return the string below to our map function callback
-    return '<li>${breed}</li>'
+    return `<li>${breed}</li>`
   })
+  // join so we don't have commas on the page
   return dogListStringArray.join('')
  }
  
