@@ -1,20 +1,22 @@
 console.log('%c HI', 'color: firebrick')
-const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
+
+var imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
 function fetchImages() {
-    fetch(imgURL)
+    fetch(imgUrl)
       .then(resp => resp.json())
       .then(json => renderImages(json))
-  }
+  };
   
   function renderImages(json) {
-    json.forEach( imgURL => {
+      
+    json.message.forEach( image => {
       const imageContainer = document.getElementById('dog-image-container')
       const img = document.createElement('img')
-      img.src = `${imgURL}`
+      img.src = image
       imageContainer.appendChild(img)
-    })
-  }
+    });
+  };
   
   document.addEventListener('DOMContentLoaded', function() {
     fetchImages()
