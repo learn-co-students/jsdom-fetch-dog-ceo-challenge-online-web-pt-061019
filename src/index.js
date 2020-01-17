@@ -56,12 +56,11 @@ let breedNames = []
 
         let filterNames = breedNames.filter(breed => breed.startsWith(letter))
         filterNames.forEach(function(name){
-            dogBreedUl.innerHTML = name
+            dogBreedUl.innerHTML = `<li>${name}</li>`
         });
             ///for (let i = 0; i < filterNames.length; i++) {
                 //`<li>${filterNames[i]}</li>`
            //};
-          // dogBreedUl.innerHTML = `<li>${filterNames.}</li>`
     })
 })
   
