@@ -42,7 +42,7 @@ function renderBreeds(json) {
     let breedsArray = [...breedChildren]
     breedsArray.forEach(breed => {
         if (breed.id === e.target.value) {
-            breed.style.display = null      
+            breed.style.display = ''  //or null     
         } else {
             breed.style.display = "none"
         }
