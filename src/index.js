@@ -1,73 +1,58 @@
-// console.log('%c HI', 'color: firebrick')
+console.log('%c HI', 'color: firebrick')
 
-//wait for the DOM to render in the browser
-document.addEventListener('DOMContentLoaded', () => {
-  // allBreeds is a variable for the dog breeds so we don't have to fetch each time we need the data
-  let allBreeds = []
 
-  //api endpoints
-  const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
-  const breedUrl = 'https://dog.ceo/api/breeds/list/all'
-  // DOM nodes for attaching even listeners
-  const dogImgContainer = document.getElementById('dog-img-container')
-  const dogBreedUl = document.getElementById('dog-breeds')
-  const breedDropdown = document.getElementById('breed-dropdown')
+document.addEventListener('DOMContentLoaded', function() {
+    fetchDogs()
+    fetchBreeds()
+})
 
-  // listen for click on the li
-  dogBreedUl.addEventListener('click', function(event){
-    // event.target will be node that was clicked
-    event.target.style.color = 'green'
-  })
+function fetchDogs() {
+    return fetch('https://dog.ceo/api/breeds/image/random/4')
+    .then(resp => resp.json())
+    .then(json => renderDogs(json));
+}
 
-  breedDropdown.addEventListener('change', /*function*/(event) => {
-    const letter = event.target.value // 'a','b','c','d'
-    // filter out the dogs whose name don't match the selected letter
-    const filteredBreeds = allBreeds.filter((breed) => breed.startWith(letter))
-    // set the innerHTML of the ul using our render helper function
-    dogBreedUl.innerHTML = createDogList(filteredBreeds)
-  })
+function fetchBreeds() {
+    return fetch('https://dog.ceo/api/breeds/list/all')
+    .then(resp => resp.json())
+    .then(json => renderBreeds(json));
+}
 
-  // fetch will default to sending an HTTP GET request
-  fetch(imgUrl, { method: 'GET'})
-  // the initial fetch returns a promise with a response object inside of it
-  .then( (/*function*/response) => {
-    console.log(response)
-    // .then takes a callback and passes the return value from the previous promise to it  
-    if (response.ok) { //if the HTTP status code is < 400
-        //respond.json() returns another promise
-        //the another .then will get the value 
-        return response.json() //return the parsed json as a promise
-      }
+
+
+function renderDogs(json) {
+    const dogImageContainer = document.getElementById("dog-image-container")
+    json.message.forEach(dog => {
+        dogImageContainer.innerHTML += `<img src = "${dog}">`
     })
-    .then( (/*function*/dogImgData) => {
-      dogImgData.message.forEach(function(imgUrl) {
-        dogImgContainer.innerHTML += `<img src="${imgUrl}">`
-      })
-      const dogImgString = dogImgData.message.map((imgUrl) => {
-        return `<img src="${imgUrl}">`
-      })
+}
+
+function renderBreeds(json) {
+    const dogBreedContainer = document.querySelector("#dog-breeds")
+    const dogObj = json.message
+    Object.keys(dogObj).forEach(dog => {
+        dogBreedContainer.innerHTML += `<li id="${dog.charAt(0)}">${dog}</li>`
     })
+    makeColorful()
+    
+    let dropDown = document.querySelector("#breed-dropdown")
+    
+    dropDown.addEventListener("change", function(e){
+    let breedChildren = document.querySelector("#dog-breeds").children
+    let breedsArray = [...breedChildren]
+    breedsArray.forEach(breed => {
+        if (breed.id === e.target.value) {
+            breed.style.display = null      
+        } else {
+            breed.style.display = "none"
+        }
+        }) 
+    })
+}
 
-
-
- fetch(breedUrl, {method: 'GET'})
-    .then((resp) => resp.json())
-    // the return value is our parsed json - the breedData object
-    .then((breedData) => { //breedData is an object whose keys are breed names
-      // set our allBreeds variable so we can hold on to the data in JS instead of fetching each time
-      allBreeds = Object.keys(breedData.message)
-      console.log(allBreeds)  //allBreeds is an array of dog breeds
-      //use helper function to get dog breeds on the page as list item
-      dogBreedUl.innerHTML = createDogList(allBreeds)
-    }) 
- })
-
- function createDogList(dogBreedArray) {
-  const dogListStringArray = dogBreedArray.map(function(breed){
-    // return the string below to our map function callback
-    return `<li>${breed}</li>`
-  })
-  // join so we don't have commas on the page
-  return dogListStringArray.join('')
- }
- 
+function makeColorful(){
+    let dogBreedContainer = document.querySelector("#dog-breeds")
+    dogBreedContainer.addEventListener("click", function(e){
+        e.target.style.color = "#FF69B4"        
+    })
+}
