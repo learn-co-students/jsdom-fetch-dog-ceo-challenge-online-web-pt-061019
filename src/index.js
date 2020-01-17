@@ -59,9 +59,7 @@ let breedNames = []
         filterNames.forEach(function(name){
             dogBreedUl.innerHTML += `<li>${name}</li>`
         });
-            ///for (let i = 0; i < filterNames.length; i++) {
-                //`<li>${filterNames[i]}</li>`
-           //};
+           
     })
 })
   
