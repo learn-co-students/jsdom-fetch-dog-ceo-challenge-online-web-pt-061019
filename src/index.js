@@ -1,8 +1,9 @@
-console.log('%c HI', 'color: firebrick')
+// console.log('%c HI', 'color: firebrick')
 
 document.addEventListener('DOMContentLoaded', (e) => {
     fetchDogImages()
     fetchDogBreeds()
+    changeColor()
 })
 
 // Add images
@@ -36,16 +37,49 @@ function fetchDogBreeds() {
         return response.json()
     })
     .then((json) => {
-        console.log(json["message"])
-        // listBreeds(json["message"])
+        listBreeds(Object.keys(json["message"]))
+        filterBreeds(Object.keys(json["message"]))
     })
 }
 
-// function listBreeds(json) {
-//     const dogBreedsContainer = document.querySelector('ul#dog-breeds')
-//     json.forEach((breed) => {
-//         const li = document.createElement('li')
-//         li.innerText = breed
-//         dogBreedsContainer.appendChild(li)
-//     })
-// }
+function listBreeds(json) {
+    const dogBreedsContainer = document.querySelector('ul#dog-breeds')
+    json.forEach((breed) => {
+        const li = document.createElement('li')
+        li.innerText = breed
+        dogBreedsContainer.appendChild(li)
+    })
+}
+
+// Change font color on click
+function changeColor() {
+    const ul = document.querySelector('ul#dog-breeds')
+    ul.addEventListener('click', (e) => {
+        e.target.style.color = 'lightgreen'
+    })
+}
+
+// Filter 
+function filterBreeds(json) {
+    const dropdown = document.querySelector('#breed-dropdown')
+    dropdown.addEventListener('change', (e) => {
+        const selectedLetter = e.target.value 
+        let filteredBreeds = json.filter((breed) => {
+            return breed.startsWith(selectedLetter)
+        })
+        updateBreeds(filteredBreeds)
+    })
+}
+
+function updateBreeds(breeds) {
+    const ul = document.querySelector('ul#dog-breeds')
+    removeChildren(ul)
+    listBreeds(breeds)
+}
+
+function removeChildren(ul) {
+    const newUl = document.querySelector('ul#dog-breeds')
+    while (newUl.firstChild) {
+        newUl.removeChild(newUl.firstChild)
+    }
+}
