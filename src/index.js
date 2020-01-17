@@ -48,12 +48,20 @@ let breedNames = []
     const alphaDropdown = document.getElementById('breed-dropdown')
     alphaDropdown.addEventListener('change', function(event) {
         const letter = event.target.value
+
         let breeds = dogBreedUl.getElementsByTagName("li");
             for (let i = 0; i < breeds.length; i++) {
              breedNames.push(breeds[i].innerText)
             };
+
         let filterNames = breedNames.filter(breed => breed.startsWith(letter))
-        dogBreedUl.innerHTML = filterNames
+        filterNames.forEach(function(name){
+            dogBreedUl.innerHTML = name
+        });
+            ///for (let i = 0; i < filterNames.length; i++) {
+                //`<li>${filterNames[i]}</li>`
+           //};
+          // dogBreedUl.innerHTML = `<li>${filterNames.}</li>`
     })
-  })
+})
   
