@@ -50,7 +50,7 @@ dropdown.
 For example, if the user selects 'a' in the dropdown, only show the breeds with
 names that start with the letter a. For simplicity, the dropdown only includes
 the letters a-d. However, we can imagine expanding this to include the entire
-alphabet
+alphabet.
 
 ---
 
