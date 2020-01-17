@@ -2,7 +2,8 @@ console.log('%c HI', 'color: firebrick')
 
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
-  
+let breedNames = []
+
   document.addEventListener('DOMContentLoaded', function() {
     
     function fetchImages() {
@@ -43,10 +44,16 @@ const breedUrl = 'https://dog.ceo/api/breeds/list/all'
         event.target.style.color = 'green'
     });
 
-    const alphaDropdown = document.getElementById('.breed-dropdown')
+    
+    const alphaDropdown = document.getElementById('breed-dropdown')
     alphaDropdown.addEventListener('change', function(event) {
         const letter = event.target.value
-        
+        let breeds = dogBreedUl.getElementsByTagName("li");
+            for (let i = 0; i < breeds.length; i++) {
+             breedNames.push(breeds[i].innerText)
+            };
+        let filterNames = breedNames.filter(breed => breed.startsWith(letter))
+        dogBreedUl.innerHTML = filterNames
     })
   })
   
