@@ -81,6 +81,7 @@ function filterBreeds(breedList) {
         let filterLiBreed = breedList.filter((b) => {
             return b.startsWith(startLetter)    
         });
+        // forEach
         liBreed.forEach(breed => {
             if (filterLiBreed.includes(breed.innerText)) {
                 breed.hidden = false
@@ -88,6 +89,13 @@ function filterBreeds(breedList) {
                 breed.hidden = true
             };          
         });
+        // use helper function // not working
+        // sortedLi(filterLiBreed) 
     });
 };
 
+// not working
+function sortedLi(breeds) {
+    const originalUl = document.querySelector('#dog-breeds')
+    return showBreeds(breeds)
+}
