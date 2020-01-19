@@ -95,7 +95,7 @@ function filterBreeds(breedList) {
 };
 
 // not working
-function sortedLi(breeds) {
-    const originalUl = document.querySelector('#dog-breeds')
-    return showBreeds(breeds)
-}
+// function sortedLi(breeds) {
+//     const originalUl = document.querySelector('#dog-breeds')
+//     return showBreeds(breeds)
+// }
